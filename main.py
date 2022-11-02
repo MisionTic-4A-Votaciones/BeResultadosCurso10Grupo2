@@ -5,8 +5,13 @@ from flask import jsonify
 from flask_cors import CORS
 from waitress import serve
 
+from blueprints.result_blueprints import result_blueprints
+from blueprints.table_blueprints import table_blueprints
+
 app = Flask(__name__)
 cors = CORS(app)
+app.register_blueprint(result_blueprints)
+app.register_blueprint(table_blueprints)
 
 
 @app.route("/", methods=['GET'])
