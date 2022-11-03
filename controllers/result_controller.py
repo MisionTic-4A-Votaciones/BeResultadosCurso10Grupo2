@@ -1,3 +1,4 @@
+from models.result import Result
 
 
 class ResultController:
@@ -15,6 +16,12 @@ class ResultController:
         :return:
         """
         print("Get all")
+        data = {
+            "_id": "abc456",
+            "mesa#": "14",
+            "parti_id": "df65"
+        }
+        return [data]
 
     # get ONE result by ID
     def show(self, id_: str) -> dict:  # Or Result
@@ -24,6 +31,12 @@ class ResultController:
         :return:
         """
         print("Show by id")
+        data = {
+            "_id": id_,
+            "mesa#": "18",
+            "parti_id": "abc324"
+        }
+        return data
 
     # INSERT result
     def create(self, result_: dict) -> dict:
@@ -33,6 +46,8 @@ class ResultController:
         :return:
         """
         print("Insert")
+        result = Result(result_)
+        return result.__dict__
 
     # UPDATE result
     def update(self, id_, result_: dict) -> dict:
@@ -43,6 +58,10 @@ class ResultController:
         :return:
         """
         print("Update")
+        data = result_
+        data['_id'] = id_
+        result = Result(result_)
+        return result.__dict__
 
     # DELETE result
     def delete(self, id_: str) -> dict:
@@ -51,7 +70,9 @@ class ResultController:
         :param id_:
         :return:
         """
-        print("Delete")
+        print("Delete" + id_)
+        return {"Delete count": 1}
+    
         
 
         

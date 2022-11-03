@@ -1,3 +1,5 @@
+from models.table import Table
+
 
 class TableController:
 
