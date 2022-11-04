@@ -37,7 +37,7 @@ class CandidateController:
         candidate = Candidate(candidate_)
         return self.candidate_repository.save(candidate)
 
-    def update(self, id_: str, candidate_: str):
+    def update(self, id_: str, candidate_: dict):
         """
         method to update a candidate info
         :param id_: candidate id

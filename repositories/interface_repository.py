@@ -143,7 +143,7 @@ class InterfaceRepository(Generic[T]):
             if isinstance(item, ObjectId):
                 temp = item.__str__()
                 processed_list.append(temp)
-        if not processed_list:
+        if len(processed_list) == 0:
             processed_list = list_
         return processed_list
 

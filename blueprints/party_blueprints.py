@@ -35,7 +35,7 @@ def insert_party():
     :return: dict
     """
     party = request.get_json()
-    response = party_controller.create(party)
+    response = party_controller.create()
     return response, 201
 
 
