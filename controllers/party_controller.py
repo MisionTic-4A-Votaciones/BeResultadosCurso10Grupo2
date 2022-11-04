@@ -1,4 +1,4 @@
-from models import candidate
+from models.party import Party
 
 
 class PartyController:

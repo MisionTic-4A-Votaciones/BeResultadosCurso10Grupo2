@@ -4,7 +4,7 @@ import certifi
 import pymongo
 from typing import Generic, TypeVar, get_args
 
-from bson import ObjectId
+from bson import ObjectId, DBRef
 
 T = TypeVar('T')
 
@@ -69,34 +69,92 @@ class InterfaceRepository(Generic[T]):
         return self.find_by_id(id_)
 
     def update(self, id_: str, item: T) -> dict:
-        pass
+        current_collection = self.data_base[self.collection]
+        _id = ObjectId(id_)
+        item = item.__dict__
+        updated_item = {"$set": item}
+        document = current_collection.update_one({'_id': _id}, updated_item)
+        return {"updated_count": document.matched_count}
 
     def delete(self, id_: str) -> dict:
-        pass
+        current_collection = self.data_base[self.collection]
+        _id = ObjectId(id_)
+        result = current_collection.delete_one({'_id': _id})
+        return {"deleted_count": result.deleted_count}
 
     def query(self, query: dict) -> list:
-        pass
+        current_collection = self.data_base[self.collection]
+        dataset = []
+        for document in current_collection.find(query):
+            document['_id'] = document['_id'].__str__()
+            document = self.transform_object_ids(document)
+            document = self.get_values_db_ref(document)
+            dataset.append(document)
+        return dataset
 
     def query_aggregation(self, query: dict) -> list:
-        pass
+        current_collection = self.data_base[self.collection]
+        dataset = []
+        for document in current_collection.aggregate(query):
+            document['_id'] = document['_id'].__str__()
+            document = self.transform_object_ids(document)
+            document = self.get_values_db_ref(document)
+            dataset.append(document)
+        return dataset
 
-    def get_values_db_ref(self):
-        pass
+    def get_values_db_ref(self, document: dict) -> dict:
+        for key in document.keys():
+            if isinstance(document.get(key), DBRef):
+                collection_ref = self.data_base[document.get(key).collection]
+                _id = ObjectId(document.get(key).id)
+                document_ref = collection_ref.find({'_id': _id})
+                document_ref['_id'] = document_ref['_id'].__str__()
+                document[key] = document_ref
+                document[key] = self.get_values_db_ref(document[key])
+            elif isinstance(document.get(key), list) and len(document.get(key)) > 0:
+                document[key] = self.get_values_db_ref_from_list(document.get(key))
+            elif isinstance(document.get(key), dict):
+                document[key] = self.get_values_db_ref(document.get(key))
+            return document
 
-    def get_values_db_ref_from_list(self):
-        pass
+    def get_values_db_ref_from_list(self, list_: list) -> list:
+        processed_list = []
+        collection_ref = self.data_base[list[0]._id.collection]
+        for item in list_:
+            _id = ObjectId(item._id)
+            document_ref = collection_ref.find({'_id': _id})
+            document_ref['_id'] = document_ref['_id'].__str__
+            processed_list.append(document_ref)
+        return processed_list
 
-    def transform_object_ids(self):
-        pass
+    def transform_object_ids(self, document: dict) -> dict:
+        for key in document.keys():
+            if isinstance(document.get(key), ObjectId):
+                document[key] = document[key].__str__()
+            elif isinstance(document.get(key), list) and len(document.get(key)) > 0:
+                document[key] = self.format_list()
+            elif isinstance(document.get(key), dict):
+                document[key] = self.transform_object_ids()
+            return document
 
-    def transform_refs(self):
-        pass
+    def format_list(self, list_: list) -> list:
+        processed_list = []
+        for item in list_:
+            if isinstance(item, ObjectId):
+                temp = item.__str__()
+                processed_list.append(temp)
+        if not processed_list:
+            processed_list = list_
+        return processed_list
 
-    def format_list(self):
-        pass
+    def transform_refs(self, item: T) -> T:
+        item_dict = item.__dict__
+        for key in item_dict.keys():
+            if item_dict.get(key).__str__().count('object') == 1:
+                object_ = self.object_to_db_ref(getattr(item, key))
+                set(item, key, object_)
+            return item
 
-    def object_to_db_ref(self):
-        pass
-    
-
-    
+    def object_to_db_ref(self, item_ref: T) -> DBRef:
+        collection_ref = item_ref.__class__.__name__.lower()
+        return DBRef(collection_ref, ObjectId(item_ref._id))
