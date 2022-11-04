@@ -1,4 +1,5 @@
 from models.candidate import Candidate
+from repositories.candidate_repository import CandidateRepository
 
 
 class CandidateController:
@@ -7,6 +8,7 @@ class CandidateController:
         Candidates constructor
         """
         print("Candidate controller")
+        self.candidate_repository = CandidateRepository()
 
     def index(self):
         """
@@ -14,6 +16,7 @@ class CandidateController:
         :return: list
         """
         print("get all")
+        return self.candidate_repository.find_all()
 
     def show(self, id_: str) -> dict:
         """
@@ -22,6 +25,7 @@ class CandidateController:
         :return: dict
         """
         print('get one by id')
+        return self.candidate_repository.find_by_id(id_)
 
     def create(self, candidate_: dict) -> dict:
         """
@@ -30,6 +34,8 @@ class CandidateController:
         :return: dict
         """
         print('Create')
+        candidate = Candidate(candidate_)
+        return self.candidate_repository.save(candidate)
 
     def update(self, id_: str, candidate_: str):
         """
@@ -38,11 +44,8 @@ class CandidateController:
         :param candidate_: dict with candidate info
         :return: dict
         """
-        print('Update')
-        data = candidate_
-        data['_id'] = id_
-        student = Candidate(candidate_)
-        return student.__dict__
+        candidate = Candidate(candidate_)
+        return self.update(id_, candidate)
 
     def delete(self, id_: str) -> dict:
         """
@@ -50,4 +53,5 @@ class CandidateController:
         :param id_: Candidate id
         :return: str
         """
-        print('Delete')
+        print('Delete' + id_)
+        return self.candidate_repository.delete(id_)
