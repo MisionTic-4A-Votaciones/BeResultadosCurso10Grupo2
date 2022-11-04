@@ -19,7 +19,7 @@ def get_result_by_id(id_):
     return response, 200
 
 
-@result_blueprints.route("/result/insert", methods=["POST"])
+@result_blueprints.route("/result/insert", methods=['POST'])
 def insert_result():
     result = request.get_json()
     response = result_controller.create(result)

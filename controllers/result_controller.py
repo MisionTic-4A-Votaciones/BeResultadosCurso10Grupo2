@@ -2,14 +2,13 @@ from models.result import Result
 
 
 class ResultController:
-    # Constructor
+
     def __int__(self):
         """
         Constructor of the results
         """
         print("controller")
 
-    # get ALL results
     def index(self) -> list:
         """
 
@@ -23,7 +22,6 @@ class ResultController:
         }
         return [data]
 
-    # get ONE result by ID
     def show(self, id_: str) -> dict:  # Or Result
         """
 
@@ -38,7 +36,6 @@ class ResultController:
         }
         return data
 
-    # INSERT result
     def create(self, result_: dict) -> dict:
         """
 
@@ -49,7 +46,6 @@ class ResultController:
         result = Result(result_)
         return result.__dict__
 
-    # UPDATE result
     def update(self, id_, result_: dict) -> dict:
         """
 
@@ -63,7 +59,6 @@ class ResultController:
         result = Result(result_)
         return result.__dict__
 
-    # DELETE result
     def delete(self, id_: str) -> dict:
         """
         
@@ -72,7 +67,3 @@ class ResultController:
         """
         print("Delete" + id_)
         return {"Delete count": 1}
-    
-        
-
-        
