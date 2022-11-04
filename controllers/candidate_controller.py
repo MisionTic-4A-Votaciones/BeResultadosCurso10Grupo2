@@ -6,6 +6,7 @@ class CandidateController:
         """
         Candidates constructor
         """
+        print("Candidate controller")
 
     def index(self):
         """
