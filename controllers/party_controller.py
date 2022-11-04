@@ -40,7 +40,7 @@ class PartyController:
         """
         print('Update a party')
 
-    def delete(self, id_: str) -> str:
+    def delete(self, id_: str) -> dict:
         """
         method to delete a pt by id
         :param id_: party id

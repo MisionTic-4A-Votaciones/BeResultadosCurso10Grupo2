@@ -26,7 +26,7 @@ def insert_candidate():
     return response, 201
 
 
-@candidate_blueprints.route('/candidate/update/<string:id_>', methods =['PATCH'])
+@candidate_blueprints.route('/candidate/update/<string:id_>', methods=['PATCH'])
 def update_candidate(id_):
     candidate = request.get_json()
     response = candidate_controller.update(id_, candidate)
