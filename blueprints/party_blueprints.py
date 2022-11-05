@@ -48,6 +48,7 @@ def update_party(id_):
     """
     party = request.get_json()
     response = party_controller.update(id_, party)
+    return response, 201
 
 
 @party_blueprints.route('/party/delete/<string:id_>', methods=['DELETE'])

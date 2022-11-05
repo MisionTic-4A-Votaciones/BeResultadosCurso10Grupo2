@@ -1,13 +1,15 @@
 from models.table import Table
+from repositories.table_repository import TableRepository
 
 
 class TableController:
 
     def __int__(self):
         """
-        Constructor of the tables
+        Constructor of the results
         """
-        print("controller")
+        print("TableController")
+        self.table_repository = TableRepository
 
     def index(self) -> list:
         """
@@ -15,14 +17,16 @@ class TableController:
         :return:
         """
         print("Get all")
+        return self.table_repository.find_all()
 
-    def show(self, id_: str) -> dict:  # Or Table
+    def show(self, id_: str) -> dict:  # Or Result
         """
 
         :param id_:
         :return:
         """
         print("Show by id")
+        return self.table_repository.find_by_id(id_)
 
     def create(self, table_: dict) -> dict:
         """
@@ -31,20 +35,15 @@ class TableController:
         :return:
         """
         print("Insert")
+        table = Table(table_)
+        return self.table_repository.save(table)
 
     def update(self, id_, table_: dict) -> dict:
         """
-        
+
         :param id_:
         :param table_:
         :return:
         """
-        print("Update")
-
-    def delete(self, id_: str) -> dict:
-        """
-
-        :param id_:
-        :return:
-        """
-        print("Delete")
+        table = Table(table_)
+        return self.update(id_, table)

@@ -1,4 +1,5 @@
 from models.result import Result
+from repositories.result_repository import ResultRepository
 
 
 class ResultController:
@@ -7,7 +8,8 @@ class ResultController:
         """
         Constructor of the results
         """
-        print("controller")
+        print("ResultController")
+        self.result_repository = ResultRepository
 
     def index(self) -> list:
         """
@@ -15,12 +17,7 @@ class ResultController:
         :return:
         """
         print("Get all")
-        data = {
-            "_id": "abc456",
-            "mesa#": "14",
-            "parti_id": "df65"
-        }
-        return [data]
+        return self.result_repository.find_all()
 
     def show(self, id_: str) -> dict:  # Or Result
         """
@@ -29,12 +26,7 @@ class ResultController:
         :return:
         """
         print("Show by id")
-        data = {
-            "_id": id_,
-            "mesa#": "18",
-            "parti_id": "abc324"
-        }
-        return data
+        return self.result_repository.find_by_id(id_)
 
     def create(self, result_: dict) -> dict:
         """
@@ -44,7 +36,7 @@ class ResultController:
         """
         print("Insert")
         result = Result(result_)
-        return result.__dict__
+        return self.result_repository.save(result)
 
     def update(self, id_, result_: dict) -> dict:
         """
@@ -53,11 +45,8 @@ class ResultController:
         :param result_:
         :return:
         """
-        print("Update")
-        data = result_
-        data['_id'] = id_
         result = Result(result_)
-        return result.__dict__
+        return self.update(id_, result)
 
     def delete(self, id_: str) -> dict:
         """
@@ -66,4 +55,4 @@ class ResultController:
         :return:
         """
         print("Delete" + id_)
-        return {"Delete count": 1}
+        return self.result_repository.delete(id_)
