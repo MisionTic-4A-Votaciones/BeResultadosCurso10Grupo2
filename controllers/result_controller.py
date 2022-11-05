@@ -4,12 +4,12 @@ from repositories.result_repository import ResultRepository
 
 class ResultController:
 
-    def __int__(self):
+    def __init__(self):
         """
         Constructor of the results
         """
         print("ResultController")
-        self.result_repository = ResultRepository
+        self.result_repository = ResultRepository()
 
     def index(self) -> list:
         """

@@ -4,12 +4,12 @@ from repositories.table_repository import TableRepository
 
 class TableController:
 
-    def __int__(self):
+    def __init__(self):
         """
         Constructor of the results
         """
         print("TableController")
-        self.table_repository = TableRepository
+        self.table_repository = TableRepository()
 
     def index(self) -> list:
         """

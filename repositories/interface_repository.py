@@ -19,7 +19,7 @@ class InterfaceRepository(Generic[T]):
             data_config.get("db-connection"),
             tlsCAFILe=ca
         )
-        self.data_base = client[data_config.get("db-name")]
+        self.data_base = client[data_config.get("db_name")]
         # get generic class name
         model_class = get_args(self.__orig_bases__[0])
         self.collection = model_class[0].__name__.lower()
