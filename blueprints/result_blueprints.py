@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import request
+from flask import request # Ayuda a obtener la informacion de los json o los parametros o los bearing
 
 from controllers.result_controller import ResultController
 
@@ -27,7 +27,7 @@ def insert_result():
 
 
 @result_blueprints.route("/result/update/<string:id_>", methods=['PATCH'])
-def update_results(id_):
+def update_result(id_):
     result = request.get_json()
     response = result_controller.update(id_, result)
     return response, 201
@@ -37,5 +37,4 @@ def update_results(id_):
 def delete_result(id_):
     response = result_controller.delete(id_)
     return response, 204
-
 

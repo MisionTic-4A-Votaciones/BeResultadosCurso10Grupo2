@@ -1,57 +1,72 @@
 from models.candidate import Candidate
+from models.party import Party
 from repositories.candidate_repository import CandidateRepository
+from repositories.party_repository import PartyRepository
 
 
 class CandidateController:
+    # constructor
     def __init__(self):
         """
-        Candidates constructor
+        Constructor of the CandidateController class
         """
         print("Candidate controller")
         self.candidate_repository = CandidateRepository()
+        self.paty_repository = PartyRepository
 
-    def index(self):
+    def index(self) -> list:
         """
-        method to get all candidates
-        :return: list
+        This method gets all the candidates into the DB
+        :return: Candidate's list
         """
-        print("get all")
+        print("Get all")
         return self.candidate_repository.find_all()
 
     def show(self, id_: str) -> dict:
         """
-        method to bring a candidate using id as a param
+
         :param id_:
-        :return: dict
+        :return:
         """
-        print('get one by id')
+        print("Show by id")
         return self.candidate_repository.find_by_id(id_)
 
     def create(self, candidate_: dict) -> dict:
         """
-        method to add a new candidate
-        :param candidate_: dict with candidate info
-        :return: dict
+
+        :param candidate_:
+        :return:
         """
-        print('Create')
+
+        print("Insert")
         candidate = Candidate(candidate_)
+
         return self.candidate_repository.save(candidate)
 
-    def update(self, id_: str, candidate_: str):
+    def update(self, id_: str, candidate_: dict) -> dict:
         """
-        method to update a candidate info
-        :param id_: candidate id
-        :param candidate_: dict with candidate info
-        :return: dict
+
+        :param id_:
+        :param candidate_:
+        :return:
         """
+        print("Update by id")
         candidate = Candidate(candidate_)
-        return self.update(id_, candidate)
+        return self.candidate_repository.update(id_, candidate)
 
     def delete(self, id_: str) -> dict:
         """
-        method to delete a candidate
-        :param id_: Candidate id
-        :return: str
+
+        :param id_:
+        :return:
         """
-        print('Delete' + id_)
+        print("Delete by id")
         return self.candidate_repository.delete(id_)
+
+    def party_assign(self, candidate_id: str, party_id: str) -> dict:
+        candidate_dict = self.candidate_repository.find_by_id(candidate_id)
+        candidate_obj = Candidate(candidate_dict)
+        party_dict = self.paty_repository.find_by_id(party_id)
+        party_obj = Party(party_dict)
+        candidate_obj.party = party_obj
+        return self.candidate_repository.save(candidate_obj)

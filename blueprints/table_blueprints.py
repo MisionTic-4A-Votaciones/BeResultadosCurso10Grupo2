@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import request
+from flask import request # Ayuda a obtener la informacion de los json o los parametros o los bearing
 
 from controllers.table_controller import TableController
 
@@ -8,7 +8,7 @@ table_controller = TableController()
 
 
 @table_blueprints.route("/table/all", methods=['GET'])
-def get_all_tables():
+def get_all_table():
     response = table_controller.index()
     return response, 200
 
@@ -19,7 +19,7 @@ def get_table_by_id(id_):
     return response, 200
 
 
-@table_blueprints.route("/table/insert", methods=["POST"])
+@table_blueprints.route("/table/insert", methods=['POST'])
 def insert_table():
     table = request.get_json()
     response = table_controller.create(table)
@@ -27,7 +27,7 @@ def insert_table():
 
 
 @table_blueprints.route("/table/update/<string:id_>", methods=['PATCH'])
-def update_tables(id_):
+def update_table(id_):
     table = request.get_json()
     response = table_controller.update(id_, table)
     return response, 201

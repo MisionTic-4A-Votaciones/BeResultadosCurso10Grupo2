@@ -3,23 +3,23 @@ from repositories.result_repository import ResultRepository
 
 
 class ResultController:
-
+    # constructor
     def __init__(self):
         """
-        Constructor of the results
+        Constructor of the VoteController class
         """
-        print("ResultController")
+        print("Result controller")
         self.result_repository = ResultRepository()
 
     def index(self) -> list:
         """
-
-        :return:
+        This method gets all the votes into the DB
+        :return: Vote's list
         """
         print("Get all")
         return self.result_repository.find_all()
 
-    def show(self, id_: str) -> dict:  # Or Result
+    def show(self, id_: str) -> dict:
         """
 
         :param id_:
@@ -34,25 +34,27 @@ class ResultController:
         :param result_:
         :return:
         """
+
         print("Insert")
         result = Result(result_)
         return self.result_repository.save(result)
 
-    def update(self, id_, result_: dict) -> dict:
+    def update(self, id_: str, result_: dict) -> dict:
         """
 
         :param id_:
         :param result_:
         :return:
         """
+        print("Update by id")
         result = Result(result_)
-        return self.update(id_, result)
+        return self.result_repository.update(id_, result)
 
     def delete(self, id_: str) -> dict:
         """
-        
+
         :param id_:
         :return:
         """
-        print("Delete" + id_)
+        print("Delete by id")
         return self.result_repository.delete(id_)
