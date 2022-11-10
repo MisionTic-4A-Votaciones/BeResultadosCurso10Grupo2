@@ -12,7 +12,7 @@ class CandidateController:
         """
         print("Candidate controller")
         self.candidate_repository = CandidateRepository()
-        self.paty_repository = PartyRepository
+        self.paty_repository = PartyRepository()
 
     def index(self) -> list:
         """
