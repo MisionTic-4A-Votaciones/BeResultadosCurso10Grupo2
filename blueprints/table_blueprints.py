@@ -33,6 +33,12 @@ def update_table(id_):
     return response, 201
 
 
+@table_blueprints.route("/table/<string:table_id>/party/<string:party_id>", methods=['PUT'])
+def assign_party(table_id, party_id):
+    response = table_controller.party_assign(table_id, party_id)
+    return response, 201
+
+
 @table_blueprints.route("/table/delete/<string:id_>", methods=['DELETE'])
 def delete_table(id_):
     response = table_controller.delete(id_)

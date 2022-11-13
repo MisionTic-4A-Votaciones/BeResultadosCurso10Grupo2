@@ -1,9 +1,9 @@
-from repositories.reports_repository import ReportsRepository
+from repositories.
 
 
-class ReportsController:
+class ReportController:
     def __init__(self):
-        self.reports_repository = ReportsRepository()
+        self.report_repository = ReportRepository()
 
-    def get_greatest_grade(self):
-        return self.reports_repository.get_greatest_grade()
+    def get_greatest_result(self):
+        return self.report_repository.

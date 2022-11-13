@@ -1,9 +1,9 @@
 from flask import Blueprint
-from controllers.reports_controller import ReportsController
+from controllers.reports_controller import ReportController
 
 
 report_blueprints = Blueprint('report_blueprints', __name__)
-report_controller = ReportsController()
+report_controller = ReportController()
 
 
 @report_blueprints.route("/reports/highest_grade", methods=['GET'])

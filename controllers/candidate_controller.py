@@ -1,7 +1,5 @@
 from models.candidate import Candidate
-from models.party import Party
 from repositories.candidate_repository import CandidateRepository
-from repositories.party_repository import PartyRepository
 
 
 class CandidateController:
@@ -12,7 +10,6 @@ class CandidateController:
         """
         print("Candidate controller")
         self.candidate_repository = CandidateRepository()
-        self.paty_repository = PartyRepository()
 
     def index(self) -> list:
         """
@@ -63,10 +60,3 @@ class CandidateController:
         print("Delete by id")
         return self.candidate_repository.delete(id_)
 
-    def party_assign(self, candidate_id: str, party_id: str) -> dict:
-        candidate_dict = self.candidate_repository.find_by_id(candidate_id)
-        candidate_obj = Candidate(candidate_dict)
-        party_dict = self.paty_repository.find_by_id(party_id)
-        party_obj = Party(party_dict)
-        candidate_obj.party = party_obj
-        return self.candidate_repository.save(candidate_obj)

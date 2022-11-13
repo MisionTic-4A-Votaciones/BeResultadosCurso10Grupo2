@@ -35,7 +35,8 @@ class ResultController:
         return self.result_repository.find_by_id(id_)
 
     def get_by_table(self, table_id: str) -> list:
-        return self.result_repository.get_candidate_in_table(table_id)
+
+        return self.result_repository.get_candidates_in_table(table_id)
 
     def create(self, result_: dict, table_id: str, candidate_id: str) -> dict:
         """
