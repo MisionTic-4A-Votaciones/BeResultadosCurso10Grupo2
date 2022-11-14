@@ -39,11 +39,7 @@ class ResultController:
         return self.result_repository.get_candidates_in_table(table_id)
 
     def create(self, result_: dict, table_id: str, candidate_id: str) -> dict:
-        """
-
-        :param result_:
-        :return:
-        """
+        
         result = Result(result_)
         table_dict = self.table_repository.find_by_id(table_id)
         table_obj = Table(table_dict)

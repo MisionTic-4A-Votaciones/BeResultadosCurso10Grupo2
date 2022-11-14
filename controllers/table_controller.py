@@ -65,7 +65,7 @@ class TableController:
     def party_assign(self, table_id: str, party_id: str) -> dict:
         table_dict = self.table_repository.find_by_id(table_id)
         table_obj = Table(table_dict)
-        party_dict = self.paty_repository.find_by_id(party_id)
+        party_dict = self.party_repository.find_by_id(party_id)
         party_obj = Party(party_dict)
         table_obj.party = party_obj
         return self.table_repository.save(table_obj)
