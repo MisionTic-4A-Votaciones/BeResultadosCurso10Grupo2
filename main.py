@@ -8,7 +8,7 @@ from blueprints.candidate_blueprints import candidate_blueprints
 from blueprints.party_blueprints import party_blueprints
 from blueprints.result_blueprints import result_blueprints
 from blueprints.table_blueprints import table_blueprints
-from blueprints.reports_blueprints import report_blueprints
+from blueprints.reports_blueprints import reports_blueprints
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -17,7 +17,7 @@ app.register_blueprint(party_blueprints)
 app.register_blueprint(candidate_blueprints)
 app.register_blueprint(result_blueprints)
 app.register_blueprint(table_blueprints)
-app.register_blueprint(report_blueprints)
+app.register_blueprint(reports_blueprints)
 
 
 @app.route("/", methods=['GET'])
